@@ -110,7 +110,7 @@ object Main extends App {
       Await.result(Http().shutdownAllConnectionPools(), 1.minute)
     } catch {
       case _: TimeoutException =>
-        println("Timeout out while shutting HTTP client")
+        println("Timed out while shutting HTTP client")
     }
 
     clientSystem.terminate()
