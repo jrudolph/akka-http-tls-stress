@@ -117,6 +117,6 @@ object Main extends App {
     Await.result(clientSystem.whenTerminated, 1.minute)
 
     println(s"Completed $requests requests out of ${handshakeCount.get()}; " +
-      "now inspect thread dump for stuck treads and terminate with Ctrl-C to exit")
+      "now inspect thread dump for stuck threads and terminate with Ctrl-C to exit")
   }
 }
