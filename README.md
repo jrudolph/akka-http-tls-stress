@@ -24,3 +24,6 @@ This will run TLS connections continuously and randomly drops some packets from 
 the server SSLEngine will get into the state where it doesn't produce any data any more but still returns another `NEED_WRAP`.
 
 When that happens no more log messages are shown but a thread keeps spinning trying to `wrap` in a cycle.
+
+Looking at `-Djavax.net.debug=all` output, the spinning cases are always when the client occurs an error due to a dropped packet and sends
+an alert to the server. The alert then puts the server into the state where it doesn't fail but also doesn't produce any further output.
