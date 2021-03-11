@@ -6,12 +6,15 @@ class FaultySSLEngine(e: SSLEngine, faultFactor: Int) extends SSLEngine {
   override def wrap(byteBuffers: Array[ByteBuffer], i: Int, i1: Int, byteBuffer: ByteBuffer): SSLEngineResult =
     e.wrap(byteBuffers, i, i1, byteBuffer)
 
-  override def unwrap(byteBuffer: ByteBuffer, byteBuffers: Array[ByteBuffer], i: Int, i1: Int): SSLEngineResult = {
+  private var packet = 0
+  override def unwrap(src: ByteBuffer, dsts: Array[ByteBuffer], i: Int, i1: Int): SSLEngineResult = {
     if (ThreadLocalRandom.current().nextInt(faultFactor) == 0) {
-      byteBuffer.clear()
+      System.err.println(s"Clearing all ${src.remaining()} bytes of source packet $packet")
+      src.clear()
     }
+    packet += 1
 
-    e.unwrap(byteBuffer, byteBuffers, i, i1)
+    e.unwrap(src, dsts, i, i1)
   }
 
   override def getDelegatedTask: Runnable = e.getDelegatedTask
