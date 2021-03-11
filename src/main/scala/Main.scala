@@ -18,6 +18,8 @@ object Main extends App {
   val Parallelism = 128
   val RunTime = 60.seconds
 
+  System.setProperty("javax.net.debug", "all")
+
   val sslContext = {
     val password: Array[Char] = "password".toCharArray
 
